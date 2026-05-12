@@ -12,7 +12,7 @@ const expenseDisplay = document.querySelector("#expense-display");
 
 const balanceDisplay = document.querySelector("#balance-display");
 
-const transactions = [];
+let transactions = [];
 
 function convertAmountToNumber(value) {
   return Number(value);
@@ -58,6 +58,14 @@ function addTransaction(transaction) {
   console.table(transactions);
 }
 
+function removeTransaction(transactionId) {
+  transactions = transactions.filter(
+    (transaction) => transaction.id !== transactionId,
+  );
+
+  updateUI();
+}
+
 function calculateIncome() {
   return transactions
     .filter((transaction) => transaction.amount > 0)
@@ -78,31 +86,60 @@ function calculateBalance() {
 }
 
 function createTransactionElement(transaction) {
-  const transactionItem = document.createElement("li");
 
-  transactionItem.classList.add("transaction-item");
+    const transactionItem =
+        document.createElement("li");
 
-  const transactionTypeClass = transaction.amount > 0 ? "income" : "expense";
+    transactionItem.classList.add(
+        "transaction-item"
+    );
 
-  transactionItem.innerHTML = `
+    const transactionTypeClass =
+        transaction.amount > 0
+            ? "income"
+            : "expense";
+
+    transactionItem.innerHTML = `
         <div class="transaction-info">
             <h3 class="transaction-name">
                 ${transaction.name}
             </h3>
 
             <p class="transaction-type">
-                ${transaction.amount > 0 ? "Receita" : "Despesa"}
+                ${transaction.amount > 0
+                    ? "Receita"
+                    : "Despesa"}
             </p>
         </div>
 
         <div class="transaction-details">
+
             <span class="transaction-amount ${transactionTypeClass}">
                 ${formatCurrency(transaction.amount)}
             </span>
+
+            <button
+                class="delete-button"
+                data-id="${transaction.id}"
+                aria-label="Remover transação"
+            >
+                ✕
+            </button>
+
         </div>
     `;
 
-  return transactionItem;
+    const deleteButton =
+        transactionItem.querySelector(
+            ".delete-button"
+        );
+
+    deleteButton.addEventListener(
+        "click",
+        () => removeTransaction(transaction.id)
+    );
+
+    return transactionItem;
 }
 
 function renderTransactions() {
