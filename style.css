@@ -76,6 +76,58 @@ body {
   font-size: 0.95rem;
 }
 
+.summary-card,
+.form-section,
+.transactions-section,
+.transaction-item {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.balance-positive {
+  color: var(--income-color) !important;
+}
+
+.balance-negative {
+  color: var(--expense-color) !important;
+}
+
+.empty-state {
+  background-color: #fafafa;
+}
+
+.submit-button:active {
+  transform: scale(0.98);
+}
+
 .main {
   flex: 1;
 
@@ -449,5 +501,15 @@ body {
     align-items: flex-start;
 
     gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-value {
+    font-size: 1.5rem;
+  }
+
+  .transaction-amount {
+    font-size: 0.95rem;
   }
 }

@@ -228,15 +228,26 @@ function updateSummaryCards() {
   balanceDisplay.textContent = formatCurrency(balance);
 }
 
+function updateBalanceStyle() {
+  const balance = calculateBalance();
+
+  balanceDisplay.classList.remove("balance-positive", "balance-negative");
+
+  if (balance > 0) {
+    balanceDisplay.classList.add("balance-positive");
+  } else if (balance < 0) {
+    balanceDisplay.classList.add("balance-negative");
+  }
+}
+
 function updateUI() {
   renderTransactions();
 
   updateSummaryCards();
+
+  updateBalanceStyle();
 }
 
-/**
- * Clears form inputs
- */
 function clearFormInputs() {
   transactionNameInput.value = "";
 
@@ -282,5 +293,10 @@ transactionAmountInput.addEventListener("input", () => {
 });
 
 transactionForm.addEventListener("submit", handleFormSubmit);
+
+console.log(
+  "%cSmartCash iniciado com sucesso.",
+  "color: #2563eb; font-size: 14px; font-weight: bold;",
+);
 
 initializeApplication();
