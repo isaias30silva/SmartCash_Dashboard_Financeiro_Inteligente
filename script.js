@@ -1,17 +1,11 @@
 const transactionForm = document.querySelector("#transaction-form");
-
 const transactionNameInput = document.querySelector("#transaction-name");
-
 const transactionAmountInput = document.querySelector("#transaction-amount");
-
+const formMessage = document.querySelector("#form-message");
 const transactionList = document.querySelector("#transaction-list");
-
 const incomeDisplay = document.querySelector("#income-display");
-
 const expenseDisplay = document.querySelector("#expense-display");
-
 const balanceDisplay = document.querySelector("#balance-display");
-
 const LOCAL_STORAGE_KEY = "smartcash:transactions";
 
 let transactions = [];
@@ -28,18 +22,39 @@ function formatCurrency(value) {
 }
 
 function validateForm(name, amount) {
+  clearInputErrors();
+
+  hideFormMessage();
+
   if (name.trim() === "") {
-    alert("Por favor, informe uma descrição.");
+    addInputError(transactionNameInput);
+
+    showFormMessage("Por favor, informe uma descrição.", "error");
+
     return false;
   }
 
   if (transactionAmountInput.value.trim() === "") {
-    alert("Por favor, informe um valor.");
+    addInputError(transactionAmountInput);
+
+    showFormMessage("Por favor, informe um valor.", "error");
+
     return false;
   }
 
   if (isNaN(amount)) {
-    alert("O valor informado é inválido.");
+    addInputError(transactionAmountInput);
+
+    showFormMessage("O valor informado é inválido.", "error");
+
+    return false;
+  }
+
+  if (amount === 0) {
+    addInputError(transactionAmountInput);
+
+    showFormMessage("O valor não pode ser zero.", "error");
+
     return false;
   }
 
@@ -175,6 +190,30 @@ function renderTransactions() {
   });
 }
 
+function showFormMessage(message, type) {
+  formMessage.textContent = message;
+
+  formMessage.className = `form-message ${type}`;
+}
+
+function hideFormMessage() {
+  formMessage.className = "form-message";
+}
+
+function addInputError(input) {
+  input.classList.add("input-error");
+}
+
+function removeInputError(input) {
+  input.classList.remove("input-error");
+}
+
+function clearInputErrors() {
+  removeInputError(transactionNameInput);
+
+  removeInputError(transactionAmountInput);
+}
+
 function updateSummaryCards() {
   const income = calculateIncome();
 
@@ -195,10 +234,15 @@ function updateUI() {
   updateSummaryCards();
 }
 
+/**
+ * Clears form inputs
+ */
 function clearFormInputs() {
   transactionNameInput.value = "";
 
   transactionAmountInput.value = "";
+
+  clearInputErrors();
 
   transactionNameInput.focus();
 }
@@ -220,10 +264,22 @@ function handleFormSubmit(event) {
 
   addTransaction(newTransaction);
 
+  showFormMessage("Transação adicionada com sucesso.", "success");
+
   updateUI();
 
   clearFormInputs();
 }
+
+transactionNameInput.addEventListener("input", () => {
+  removeInputError(transactionNameInput);
+  hideFormMessage();
+});
+
+transactionAmountInput.addEventListener("input", () => {
+  removeInputError(transactionAmountInput);
+  hideFormMessage();
+});
 
 transactionForm.addEventListener("submit", handleFormSubmit);
 

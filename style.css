@@ -363,6 +363,43 @@ body {
   align-items: center;
 }
 
+.form-message {
+  display: none;
+
+  padding: 1rem;
+
+  border-radius: 12px;
+
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.form-message.error {
+  display: block;
+
+  background-color: rgba(220, 38, 38, 0.1);
+
+  color: var(--expense-color);
+
+  border: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+.form-message.success {
+  display: block;
+
+  background-color: rgba(22, 163, 74, 0.1);
+
+  color: var(--income-color);
+
+  border: 1px solid rgba(22, 163, 74, 0.2);
+}
+
+.input-error {
+  border-color: var(--expense-color) !important;
+
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1);
+}
+
 @media (max-width: 992px) {
   .dashboard-content {
     grid-template-columns: 1fr;
