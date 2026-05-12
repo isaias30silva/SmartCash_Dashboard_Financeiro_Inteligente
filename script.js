@@ -12,6 +12,8 @@ const expenseDisplay = document.querySelector("#expense-display");
 
 const balanceDisplay = document.querySelector("#balance-display");
 
+const LOCAL_STORAGE_KEY = "smartcash:transactions";
+
 let transactions = [];
 
 function convertAmountToNumber(value) {
@@ -55,6 +57,8 @@ function createTransaction(name, amount) {
 function addTransaction(transaction) {
   transactions.push(transaction);
 
+  saveTransactions();
+
   console.table(transactions);
 }
 
@@ -62,6 +66,8 @@ function removeTransaction(transactionId) {
   transactions = transactions.filter(
     (transaction) => transaction.id !== transactionId,
   );
+
+  saveTransactions();
 
   updateUI();
 }
@@ -85,30 +91,41 @@ function calculateBalance() {
   );
 }
 
+function saveTransactions() {
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(transactions));
+}
+
+function loadTransactions() {
+  const storedTransactions = localStorage.getItem(LOCAL_STORAGE_KEY);
+
+  if (!storedTransactions) {
+    return;
+  }
+
+  transactions = JSON.parse(storedTransactions);
+
+  updateUI();
+}
+
+function initializeApplication() {
+  loadTransactions();
+}
+
 function createTransactionElement(transaction) {
+  const transactionItem = document.createElement("li");
 
-    const transactionItem =
-        document.createElement("li");
+  transactionItem.classList.add("transaction-item");
 
-    transactionItem.classList.add(
-        "transaction-item"
-    );
+  const transactionTypeClass = transaction.amount > 0 ? "income" : "expense";
 
-    const transactionTypeClass =
-        transaction.amount > 0
-            ? "income"
-            : "expense";
-
-    transactionItem.innerHTML = `
+  transactionItem.innerHTML = `
         <div class="transaction-info">
             <h3 class="transaction-name">
                 ${transaction.name}
             </h3>
 
             <p class="transaction-type">
-                ${transaction.amount > 0
-                    ? "Receita"
-                    : "Despesa"}
+                ${transaction.amount > 0 ? "Receita" : "Despesa"}
             </p>
         </div>
 
@@ -129,17 +146,13 @@ function createTransactionElement(transaction) {
         </div>
     `;
 
-    const deleteButton =
-        transactionItem.querySelector(
-            ".delete-button"
-        );
+  const deleteButton = transactionItem.querySelector(".delete-button");
 
-    deleteButton.addEventListener(
-        "click",
-        () => removeTransaction(transaction.id)
-    );
+  deleteButton.addEventListener("click", () =>
+    removeTransaction(transaction.id),
+  );
 
-    return transactionItem;
+  return transactionItem;
 }
 
 function renderTransactions() {
@@ -213,3 +226,5 @@ function handleFormSubmit(event) {
 }
 
 transactionForm.addEventListener("submit", handleFormSubmit);
+
+initializeApplication();
