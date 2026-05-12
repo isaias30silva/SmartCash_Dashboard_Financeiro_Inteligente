@@ -281,6 +281,60 @@ body {
   font-size: 0.9rem;
 }
 
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1.25rem;
+
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+
+  transition: var(--transition);
+}
+
+.transaction-item:hover {
+  transform: translateY(-2px);
+
+  box-shadow: var(--shadow-sm);
+}
+
+.transaction-info {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.25rem;
+}
+
+.transaction-name {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.transaction-type {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.transaction-details {
+  display: flex;
+  align-items: center;
+}
+
+.transaction-amount {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.transaction-amount.income {
+  color: var(--income-color);
+}
+
+.transaction-amount.expense {
+  color: var(--expense-color);
+}
+
 @media (max-width: 992px) {
   .dashboard-content {
     grid-template-columns: 1fr;
@@ -321,5 +375,14 @@ body {
 
   .submit-button {
     width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .transaction-item {
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 1rem;
   }
 }

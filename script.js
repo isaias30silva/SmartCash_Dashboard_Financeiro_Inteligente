@@ -4,10 +4,25 @@ const transactionNameInput = document.querySelector("#transaction-name");
 
 const transactionAmountInput = document.querySelector("#transaction-amount");
 
+const transactionList = document.querySelector("#transaction-list");
+
+const incomeDisplay = document.querySelector("#income-display");
+
+const expenseDisplay = document.querySelector("#expense-display");
+
+const balanceDisplay = document.querySelector("#balance-display");
+
 const transactions = [];
 
 function convertAmountToNumber(value) {
   return Number(value);
+}
+
+function formatCurrency(value) {
+  return value.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
 }
 
 function validateForm(name, amount) {
@@ -40,8 +55,102 @@ function createTransaction(name, amount) {
 function addTransaction(transaction) {
   transactions.push(transaction);
 
-  console.log("Nova transação adicionada:");
   console.table(transactions);
+}
+
+function calculateIncome() {
+  return transactions
+    .filter((transaction) => transaction.amount > 0)
+    .reduce((total, transaction) => total + transaction.amount, 0);
+}
+
+function calculateExpenses() {
+  return transactions
+    .filter((transaction) => transaction.amount < 0)
+    .reduce((total, transaction) => total + transaction.amount, 0);
+}
+
+function calculateBalance() {
+  return transactions.reduce(
+    (total, transaction) => total + transaction.amount,
+    0,
+  );
+}
+
+function createTransactionElement(transaction) {
+  const transactionItem = document.createElement("li");
+
+  transactionItem.classList.add("transaction-item");
+
+  const transactionTypeClass = transaction.amount > 0 ? "income" : "expense";
+
+  transactionItem.innerHTML = `
+        <div class="transaction-info">
+            <h3 class="transaction-name">
+                ${transaction.name}
+            </h3>
+
+            <p class="transaction-type">
+                ${transaction.amount > 0 ? "Receita" : "Despesa"}
+            </p>
+        </div>
+
+        <div class="transaction-details">
+            <span class="transaction-amount ${transactionTypeClass}">
+                ${formatCurrency(transaction.amount)}
+            </span>
+        </div>
+    `;
+
+  return transactionItem;
+}
+
+function renderTransactions() {
+  transactionList.innerHTML = "";
+
+  if (transactions.length === 0) {
+    transactionList.innerHTML = `
+            <li class="empty-state">
+                Nenhuma transação cadastrada.
+            </li>
+        `;
+
+    return;
+  }
+
+  transactions.forEach((transaction) => {
+    const transactionElement = createTransactionElement(transaction);
+
+    transactionList.appendChild(transactionElement);
+  });
+}
+
+function updateSummaryCards() {
+  const income = calculateIncome();
+
+  const expenses = calculateExpenses();
+
+  const balance = calculateBalance();
+
+  incomeDisplay.textContent = formatCurrency(income);
+
+  expenseDisplay.textContent = formatCurrency(expenses);
+
+  balanceDisplay.textContent = formatCurrency(balance);
+}
+
+function updateUI() {
+  renderTransactions();
+
+  updateSummaryCards();
+}
+
+function clearFormInputs() {
+  transactionNameInput.value = "";
+
+  transactionAmountInput.value = "";
+
+  transactionNameInput.focus();
 }
 
 function handleFormSubmit(event) {
@@ -61,17 +170,9 @@ function handleFormSubmit(event) {
 
   addTransaction(newTransaction);
 
-  console.log("Transação criada:");
-  console.log(newTransaction);
+  updateUI();
 
   clearFormInputs();
-}
-
-function clearFormInputs() {
-  transactionNameInput.value = "";
-  transactionAmountInput.value = "";
-
-  transactionNameInput.focus();
 }
 
 transactionForm.addEventListener("submit", handleFormSubmit);
