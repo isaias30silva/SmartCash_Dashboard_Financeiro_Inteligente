@@ -1,0 +1,325 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #2563eb;
+  --primary-hover: #1d4ed8;
+
+  --income-color: #16a34a;
+  --expense-color: #dc2626;
+
+  --background-color: #f3f4f6;
+  --card-color: #ffffff;
+
+  --text-color: #111827;
+  --text-secondary: #6b7280;
+
+  --border-color: #e5e7eb;
+
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.08);
+
+  --border-radius: 16px;
+
+  --transition: 0.3s ease;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.header {
+  background-color: var(--card-color);
+
+  border-bottom: 1px solid var(--border-color);
+
+  padding: 2rem 0;
+
+  box-shadow: var(--shadow-sm);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+
+  margin-bottom: 0.25rem;
+}
+
+.logo-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.main {
+  flex: 1;
+
+  padding: 2.5rem 0;
+}
+
+.summary-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 1.5rem;
+
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  background-color: var(--card-color);
+
+  padding: 1.5rem;
+
+  border-radius: var(--border-radius);
+
+  box-shadow: var(--shadow-sm);
+
+  transition: var(--transition);
+}
+
+.summary-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow: var(--shadow-md);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 1rem;
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+
+  color: var(--text-secondary);
+}
+
+.card-icon {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.card-value {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.income-card .card-icon,
+.income-card .card-value {
+  color: var(--income-color);
+}
+
+.expense-card .card-icon,
+.expense-card .card-value {
+  color: var(--expense-color);
+}
+
+.balance-card .card-icon,
+.balance-card .card-value {
+  color: var(--primary-color);
+}
+
+.dashboard-content {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+
+  gap: 2rem;
+}
+
+.form-section,
+.transactions-section {
+  background-color: var(--card-color);
+
+  border-radius: var(--border-radius);
+
+  padding: 2rem;
+
+  box-shadow: var(--shadow-sm);
+}
+
+.section-header {
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+
+  margin-bottom: 0.5rem;
+}
+
+.section-description {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.transaction-form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+
+  margin-bottom: 0.5rem;
+}
+
+.form-group input {
+  padding: 1rem;
+
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+
+  font-size: 1rem;
+
+  transition: var(--transition);
+}
+
+.form-group input:focus {
+  outline: none;
+
+  border-color: var(--primary-color);
+
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+.submit-button {
+  background-color: var(--primary-color);
+  color: #ffffff;
+
+  border: none;
+  border-radius: 12px;
+
+  padding: 1rem;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: var(--transition);
+}
+
+.submit-button:hover {
+  background-color: var(--primary-hover);
+
+  transform: translateY(-2px);
+}
+
+.transaction-list {
+  list-style: none;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 1rem;
+}
+
+.empty-state {
+  text-align: center;
+
+  padding: 3rem 1rem;
+
+  color: var(--text-secondary);
+
+  border: 2px dashed var(--border-color);
+  border-radius: 12px;
+}
+
+.footer {
+  background-color: var(--card-color);
+
+  border-top: 1px solid var(--border-color);
+
+  padding: 1.5rem 0;
+
+  margin-top: 2rem;
+}
+
+.footer-text {
+  text-align: center;
+
+  color: var(--text-secondary);
+
+  font-size: 0.9rem;
+}
+
+@media (max-width: 992px) {
+  .dashboard-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .summary-section {
+    grid-template-columns: 1fr;
+  }
+
+  .main {
+    padding: 1.5rem 0;
+  }
+
+  .form-section,
+  .transactions-section {
+    padding: 1.5rem;
+  }
+
+  .card-value {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .logo {
+    font-size: 1.6rem;
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+  }
+
+  .submit-button {
+    width: 100%;
+  }
+}
