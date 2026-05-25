@@ -270,6 +270,12 @@ O projeto foi desenvolvido priorizando:
 
 ---
 
+## 👀 Preview
+
+![Preview da aplicação](./assets/images/preview.png)
+
+---
+
 ## 👨‍💻 Autor
 
 **Isaias Silva**
