@@ -73,8 +73,6 @@ function addTransaction(transaction) {
   transactions.push(transaction);
 
   saveTransactions();
-
-  console.table(transactions);
 }
 
 function removeTransaction(transactionId) {
@@ -160,12 +158,6 @@ function createTransactionElement(transaction) {
 
         </div>
     `;
-
-  const deleteButton = transactionItem.querySelector(".delete-button");
-
-  deleteButton.addEventListener("click", () =>
-    removeTransaction(transaction.id),
-  );
 
   return transactionItem;
 }
@@ -282,6 +274,18 @@ function handleFormSubmit(event) {
   clearFormInputs();
 }
 
+transactionList.addEventListener("click", (event) => {
+  const deleteButton = event.target.closest(".delete-button");
+
+  if (!deleteButton) {
+    return;
+  }
+
+  const transactionId = Number(deleteButton.dataset.id);
+
+  removeTransaction(transactionId);
+});
+
 transactionNameInput.addEventListener("input", () => {
   removeInputError(transactionNameInput);
   hideFormMessage();
@@ -293,10 +297,5 @@ transactionAmountInput.addEventListener("input", () => {
 });
 
 transactionForm.addEventListener("submit", handleFormSubmit);
-
-console.log(
-  "%cSmartCash iniciado com sucesso.",
-  "color: #2563eb; font-size: 14px; font-weight: bold;",
-);
 
 initializeApplication();
