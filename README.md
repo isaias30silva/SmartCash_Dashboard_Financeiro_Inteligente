@@ -17,7 +17,7 @@ O principal objetivo deste projeto foi consolidar fundamentos essenciais de dese
 
 ## 🌐 Acesse o projeto
 
-🔗
+🔗 https://isaias30silva.github.io/SmartCash_Dashboard_Financeiro_Inteligente/
 
 ---
 
@@ -135,6 +135,17 @@ Durante o desenvolvimento do SmartCash foram aplicados conceitos fundamentais e 
 - `localStorage`
 - `JSON.stringify()`
 - `JSON.parse()`
+
+---
+
+## 📊 Performance (Lighthouse)
+
+Resultado da auditoria utilizando o Lighthouse:
+
+- ⚡ Performance: 56
+- ♿ Acessibilidade: 95
+- ✅ Boas práticas: 96
+- 🔍 SEO: 100
 
 ---
 
